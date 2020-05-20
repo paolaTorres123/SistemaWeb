@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <insert id="agregaCasa" parameterType="Casa">
+        INSERT INTO casa
+        (nombre_casa,capacidad_total,numero_cuartos,calle,num_exterior,colonia,codigo_postal,id_supervisor)
+        VALUES
+        (#{nombreCasa}, #{capacidadTotal}, #{numeroCuartos}, #{calle}, #{numExterior}, #{colonia}, #{codigoPostal},#{supervisor.idSupervisor});
+    </insert>
+
+    <update id="editarCasa" parameterType="Casa">
+        UPDATE casa
+        SET nombre_casa=#{nombreCasa},
+        capacidad_total=#{capacidadTotal},
+        numero_cuartos=#{numeroCuartos},
+        calle=#{calle},
+        num_exterior=#{numExterior},
+        colonia=#{colonia},
+        codigo_postal=#{codigoPostal},
+        id_supervisor=#{supervisor.idSupervisor}
+        WHERE
+        id_casa=#{idCasa};
+    </update>
+
+
+    <resultMap type="Casa" id="resultMapCasa">
+        <id property="idCasa" column="id_casa"/>
+        <result property="nombreCasa" column="nombre_casa"/>
+        <result property="capacidadTotal" column="capacidad_total"/>
+        <result property="numeroCuartos" column="numero_cuartos"/>
+        <result property="calle" column="calle"/>
+        <result property="numExterior" column="num_exterior"/>
+        <result property="colonia" column="colonia"/>
+        <result property="codigoPostal" column="codigo_postal"/>
+
+        <association property="supervisor" javaType="Supervisor">
+            <id property="idSupervisor" column="id_supervisor"/>
+            <id property="nombreSupervisor" column="nombre_supervisor"/>
+            <id property="apPaterno" column="ap_paterno"/>
+            <id property="apMaterno" column="ap_materno"/>
+        </association>
+
+        <association property="estatus" javaType="Estatus">
+            <id property="idEstatus" column="id_estatus"/>
+            <result property="nombreEstatus" column="nombre_estatus"/>
+        </association>
+
+    </resultMap>
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <select id="obtenerTodasCasas" resultMap="resultMapCasa" >
+        SELECT id_casa, nombre_casa,capacidad_total,numero_cuartos,calle,num_exterior,colonia,codigo_postal,S.id_supervisor,S.nombre_supervisor,S.ap_paterno,S.ap_materno,E.id_estatus,nombre_estatus
+        FROM casa C
+        INNER JOIN supervisor S on S.id_supervisor=C.id_supervisor
+        INNER JOIN estatus E on E.id_estatus=C.estatus;
+
+    </select>
+    <select id="obtenerCasassActivas" resultMap="resultMapCasa" >
+        SELECT id_casa, nombre_casa,capacidad_total,numero_cuartos,calle,num_exterior,colonia,codigo_postal,S.id_supervisor,S.nombre_supervisor,S.ap_paterno,S.ap_materno,E.id_estatus,nombre_estatus
+        FROM casa C
+        INNER JOIN supervisor S on S.id_supervisor=C.id_supervisor
+        INNER JOIN estatus E on E.id_estatus=C.estatus
+        WHERE C.estatus='1';
+    </select>
+    <select id="obtenerCasasInactivas" resultMap="resultMapCasa" >
+        SELECT id_casa, nombre_casa,capacidad_total,numero_cuartos,calle,num_exterior,colonia,codigo_postal,S.id_supervisor,S.nombre_supervisor,S.ap_paterno,S.ap_materno,E.id_estatus,nombre_estatus
+        FROM casa C
+        INNER JOIN supervisor S on S.id_supervisor=C.id_supervisor
+        INNER JOIN estatus E on E.id_estatus=C.estatus
+        WHERE C.estatus='2';
+    </select>
+
+    <delete id="eliminarCasa" >
+        DELETE FROM casa
+        WHERE id_casa in (
+        <foreach collection="list" separator="," item="casa">
+            #{casa.idCasa}
+        </foreach>
+        )AND id_casa NOT IN (
+        SELECT id_casa FROM cuarto
+        )
+    </delete>
+    <update id="reactivarCasas" parameterType="Casa">
+        UPDATE casa
+        SET estatus='1'
+        WHERE id_casa in (
+        <foreach collection="list" separator="," item="casa">
+            #{casa.idCasa}
+        </foreach>
+        )
+    </update>
+
+    <update id="desactivarCasas" parameterType="Casa">
+        UPDATE casa
+        SET estatus='2'
+        WHERE id_casa in (
+        <foreach collection="list" separator="," item="casa">
+            #{casa.idCasa}
+        </foreach>
+        )
+    </update>
+
+</mapper>

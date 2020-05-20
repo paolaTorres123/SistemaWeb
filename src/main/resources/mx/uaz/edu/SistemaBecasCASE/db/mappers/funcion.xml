@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <select id="obtenerTodasFunciones" resultMap="resultFuncion">
+        select id_funcion, nombre_funcion
+        from funcion;
+    </select>
+
+
+
+
+    <resultMap type="Funcion" id="resultFuncion">
+        <id property="idFuncion" column="id_funcion"/>
+        <result property="funcion" column="nombre_funcion"/>
+    </resultMap>
+
+
+    <insert id="agregaFuncion"  parameterType="Funcion">
+        INSERT INTO funcion
+        (nombre_funcion)
+        VALUES
+        (#{funcion})
+        <selectKey keyProperty="idFuncion" resultType="int" order="AFTER" >
+            SELECT @@IDENTITY AS id_funcion
+        </selectKey>
+    </insert>
+
+    <update id="editarFuncion" parameterType="Funcion">
+        UPDATE funcion
+        SET
+        nombre_funcion=#{funcion}
+        WHERE
+        id_funcion=#{idFuncion}
+    </update>
+
+    <delete id="eliminarFuncion" >
+        DELETE FROM funcion
+        WHERE id_funcion in (
+        <foreach collection="list" separator="," item="funcion">
+            #{funcion.idFuncion}
+        </foreach>
+        )AND id_funcion NOT IN(
+        SELECT id_funcion  FROM responsable)
+    </delete>
+
+
+</mapper>

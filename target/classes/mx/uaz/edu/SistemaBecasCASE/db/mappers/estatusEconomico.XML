@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <select id="obtenerTodosEstatusEconomico" resultMap="resultMapEstatusEconomico" >
+		SELECT *
+		FROM  estatus_economico
+	</select>
+
+	<select id="obtenerEstatusEconomico" resultMap="resultMapEstatusEconomico" >
+		SELECT *
+		FROM  estatus_economico
+		WHERE id_estatus_economico = #{id_estatus_economico}
+	</select>
+	<select id="obtenerEstatusEconomicoTipo" resultMap="resultMapEstatusEconomico" >
+		SELECT *
+		FROM  estatus_economico
+		WHERE tipo = #{tipo}
+	</select>
+
+
+	<insert id="agregaEstatusEconomico" parameterType="EstatusEconomico">
+		INSERT INTO estatus_economico
+			(tipo)
+		VALUES
+			(#{tipo});
+	</insert>
+
+    <resultMap type="EstatusEconomico" id="resultMapEstatusEconomico">
+        <id property="id_estatus_economico" column="id_estatus_economico"/>
+        <result property="tipo" column="tipo"/>
+    </resultMap>
+
+    <update id="editaEstatusEconomico" parameterType="EstatusEconomico">
+		UPDATE estatus_economico
+		SET tipo=#{tipo}
+		WHERE
+			id_estatus_economico=#{id_estatus_economico};
+	</update>
+
+</mapper>

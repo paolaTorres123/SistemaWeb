@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <resultMap type="Beca" id="resultMapBeca">
+        <id property="id_beca" column="id_beca"/>
+        <result property="fecha_formateada" column="fecha_solicitud"/>
+
+        <association property="alumno" javaType="Alumno">
+            <id property="id_alumno" column="id_alumno"/>
+            <result property="nombre" column="nombre"/>
+            <result property="ap_paterno" column="ap_paterno"/>
+            <result property="ap_materno" column="ap_materno"/>
+        </association>
+
+        <association property="estatus" javaType="Estatus">
+            <id property="idEstatus" column="id_estatus"/>
+            <result property="nombreEstatus" column="nombre_estatus"/>
+        </association>
+
+        <association property="tipoSolicitud" javaType="TipoSolicitud">
+            <id property="id_tipo_solicitud" column="id_tipo_solicitud"/>
+            <result property="solicitud" column="solicitud"/>
+        </association>
+
+        <association property="tipoBeca" javaType="TipoBeca">
+            <id property="id_tipo_beca" column="id_tipo_beca"/>
+            <result property="tipo" column="tipo"/>
+        </association>
+    </resultMap>
+
+    <insert id="agregaBeca" parameterType="Beca">
+		INSERT INTO sistema_becas_case.beca
+			(id_alumno,
+			fecha_solicitud,
+			id_tipo_beca,
+			id_tipo_solicitud)
+		VALUES
+			(#{alumno.id_alumno},
+			#{fecha_solicitud},
+			#{tipoBeca.id_tipo_beca},
+			#{tipoSolicitud.id_tipo_solicitud});
+	</insert>
+
+    <select id="obtenerTodasBecas" resultMap="resultMapBeca">
+		SELECT b.id_beca, a.*, DATE_FORMAT(fecha_solicitud, '%d/%M/%Y') as fecha_solicitud, tb.id_tipo_beca, tipo,
+		        ts.id_tipo_solicitud, solicitud, e.id_estatus, nombre_estatus
+		FROM  beca b
+		INNER JOIN alumno a ON b.id_alumno=a.id_alumno
+		INNER JOIN estatus e ON e.id_estatus=b.id_estatus
+		INNER JOIN tipo_beca tb ON tb.id_tipo_beca=b.id_tipo_beca
+		INNER JOIN tipo_solicitud ts ON ts.id_tipo_solicitud=b.id_tipo_solicitud;
+	</select>
+
+    <select id="obtenerBecasHospedaje" resultMap="resultMapBeca">
+		SELECT b.id_beca, a.*, DATE_FORMAT(fecha_solicitud, '%d/%M/%Y') as fecha_solicitud, tb.id_tipo_beca, tipo,
+		        ts.id_tipo_solicitud, solicitud, e.id_estatus, nombre_estatus
+		FROM  beca b
+		INNER JOIN alumno a ON b.id_alumno=a.id_alumno
+		INNER JOIN estatus e ON e.id_estatus=b.id_estatus
+		INNER JOIN tipo_beca tb ON tb.id_tipo_beca=b.id_tipo_beca
+		INNER JOIN tipo_solicitud ts ON ts.id_tipo_solicitud=b.id_tipo_solicitud
+		WHERE b.id_tipo_beca=2;
+	</select>
+
+    <select id="obtenerBecasAlimentacion" resultMap="resultMapBeca">
+		SELECT b.id_beca, a.*, DATE_FORMAT(fecha_solicitud, '%d/%M/%Y') as fecha_solicitud, tb.id_tipo_beca, tipo,
+		        ts.id_tipo_solicitud, solicitud, e.id_estatus, nombre_estatus
+		FROM  beca b
+		INNER JOIN alumno a ON b.id_alumno=a.id_alumno
+		INNER JOIN estatus e ON e.id_estatus=b.id_estatus
+		INNER JOIN tipo_beca tb ON tb.id_tipo_beca=b.id_tipo_beca
+		INNER JOIN tipo_solicitud ts ON ts.id_tipo_solicitud=b.id_tipo_solicitud
+		WHERE b.id_tipo_beca=1;
+	</select>
+
+
+    <update id="rechazarBeca" parameterType="Beca">
+        UPDATE beca
+        SET id_estatus='5'
+        WHERE id_beca in (
+        <foreach collection="list" separator="," item="beca">
+            #{beca.id_beca}
+        </foreach>
+        )
+    </update>
+
+    <update id="aceptarBeca" parameterType="Beca">
+        UPDATE beca
+        SET id_estatus='4'
+        WHERE id_beca in (
+        <foreach collection="list" separator="," item="beca">
+            #{beca.id_beca}
+        </foreach>
+        )
+    </update>
+
+    <delete id="eliminarBecas" >
+        DELETE FROM beca
+        WHERE id_beca in (
+        <foreach collection="list" separator="," item="beca">
+            #{beca.id_beca}
+        </foreach>
+        )
+    </delete>
+
+</mapper>

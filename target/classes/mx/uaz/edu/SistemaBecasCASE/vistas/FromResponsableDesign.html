@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;GENERATE_GETTERS&quot;:false,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta name="vaadin-version" content="8.1.5">
+ </head>
+ <body>
+  <vaadin-css-layout style-name="form-template" responsive size-full>
+   <vaadin-label style-name="title" width-full plain-text>
+     Agregar Responsable 
+   </vaadin-label>
+   <vaadin-css-layout caption="Información Personal" style-name="form-section">
+    <vaadin-css-layout style-name="input-group">
+     <vaadin-css-layout style-name="input-wrapper align-bottom">
+      <vaadin-text-field caption="Nombre" width="221px" _id="tfNombre"></vaadin-text-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Apellido Paterno" width="225px" _id="tfaPaterno"></vaadin-text-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Apellido Materno" width="249px" _id="tfaMaterno"></vaadin-text-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-group" width-full>
+      <vaadin-css-layout style-name="input-wrapper" _id="phoneNumberWrapper1">
+       <vaadin-horizontal-layout caption="Número de Teléfono">
+        <vaadin-text-field width="221px" _id="tfTelefono"></vaadin-text-field>
+       </vaadin-horizontal-layout>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper" height-full>
+       <vaadin-text-field caption="Correo Electrónico" width="342px" _id="tfEmail"></vaadin-text-field>
+       <vaadin-css-layout style-name="input-wrapper" height-full></vaadin-css-layout>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper" height-full>
+       <vaadin-combo-box caption="Función" placeholder="" text-input-allowed="false" width="301px" data-item-type="mx.uaz.edu.SistemaBecasCASE.modelos.Funcion" _id="cboFuncion"></vaadin-combo-box>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e801" style-name="primary" plain-text _id="btnAgregarFuncion">
+         Agregar Función 
+       </vaadin-button>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper" height-full>
+       <vaadin-combo-box caption="Subsede" text-input-allowed="false" width="301px" data-item-type="mx.uaz.edu.SistemaBecasCASE.modelos.Subsede" _id="cboSubsede"></vaadin-combo-box>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e801" style-name="primary" plain-text _id="btnAgregarSubsede">
+         Agregar Subsede 
+       </vaadin-button>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper" height-full>
+       <vaadin-combo-box caption="Estatus" placeholder="" text-input-allowed="false" width="301px" data-item-type="mx.uaz.edu.SistemaBecasCASE.modelos.Estatus" _id="cboEstatus"></vaadin-combo-box>
+      </vaadin-css-layout>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-group"></vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout style-name="form-section" width-full>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout style-name="danger">
+       <vaadin-button icon="fonticon://Vaadin-Icons/e801" style-name="primary" plain-text _id="btnAgregar">
+         Agregar 
+       </vaadin-button>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e7ad" style-name="danger" plain-text _id="btnCancelar">
+         Cancelar 
+       </vaadin-button>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+  </vaadin-css-layout>
+ </body>
+</html>

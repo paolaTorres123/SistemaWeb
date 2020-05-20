@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <select id="obtenerTodosEstatus" resultMap="resultEstatus" >
+        select id_estatus, nombre_estatus
+        from estatus;
+    </select>
+
+    <select id="obtenerEstatus" parameterType="Estatus" resultMap="resultEstatus" >
+        select id_estatus, nombre_estatus
+        from estatus
+        where id_estatus between '1' and '3';
+    </select>
+
+    <resultMap type="Estatus" id="resultEstatus">
+        <id property="idEstatus" column="id_estatus"/>
+        <result property="nombreEstatus" column="nombre_estatus"/>
+    </resultMap>
+
+
+
+    <select id="obtenerEstatusSimple" parameterType="Estatus" resultMap="resultEstatus" >
+        select id_estatus, nombre_estatus
+        from estatus
+        where id_estatus between '1' and '2';
+    </select>
+
+</mapper>

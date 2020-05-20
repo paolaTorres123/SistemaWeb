@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <resultMap type="UnidadAcademica" id="resultMapUnidadAcademica">
+        <id property="id_unidad_academica" column="id_unidad_academica"/>
+        <result property="nombre" column="nombre"/>
+    </resultMap>
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <select id="obtenerTodasUnidadAcademica" resultMap="resultMapUnidadAcademica" >
+		SELECT *
+		FROM  unidad_academica
+	</select>
+
+    <select id="obtenerUnidadAcademicaNombre" resultMap="resultMapUnidadAcademica" parameterType="UnidadAcademica">
+		SELECT *
+		FROM  unidad_academica
+		WHERE nombre = #{nombre}
+	</select>
+
+	<select id="obtenerUnidadAcademicaId" resultMap="resultMapUnidadAcademica" parameterType="UnidadAcademica">
+		SELECT *
+		FROM  unidad_academica
+		WHERE id_unidad_academica = #{id_unidad_academica}
+	</select>
+
+
+	<insert id="agregaUnidadAcademica" parameterType="UnidadAcademica">
+		INSERT INTO unidad_academica
+			(nombre)
+		VALUES
+			(#{nombre});
+	</insert>
+
+    <update id="editarUnidadAcademica" parameterType="UnidadAcademica">
+		UPDATE unidad_academica
+		SET nombre=#{nombre}
+		WHERE
+			id_unidad_academica=#{id_unidad_academica};
+	</update>
+
+</mapper>

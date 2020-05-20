@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+      <insert id="agregaResponsable"  parameterType="Responsable">
+          INSERT INTO responsable
+          (nombre, ap_paterno,ap_materno,id_funcion,id_subsede,email,telefono,id_estatus, id_usuario)
+          VALUES
+          (#{nombreResponsable},#{apPaterno},#{apMaterno},#{funcion.idFuncion},#{subsede.idSubsede},#{email},#{telefono},#{estatus.idEstatus}, #{id_usuario})
+          <selectKey keyProperty="idResponsable" resultType="int" order="AFTER" >
+              SELECT @@IDENTITY AS id_responsable
+          </selectKey>
+
+      </insert>
+
+
+
+    <select id="obtenerResponsablesActivos" resultMap="resultMapResponsable" >
+        SELECT R.id_responsable,nombre, ap_paterno,ap_materno,F.id_funcion,nombre_funcion,S.id_subsede,nombre_subsede,email,telefono,E.id_estatus,E.nombre_estatus
+        FROM responsable R
+        INNER JOIN funcion F on F.id_funcion=R.id_funcion
+        INNER JOIN subsede S on S.id_subsede=R.id_subsede
+        INNER JOIN estatus E on E.id_estatus=R.id_estatus
+        WHERE R.id_estatus = '1';
+    </select>
+
+
+    <select id="obtenerResponsablesInactivos" resultMap="resultMapResponsable" >
+        SELECT R.id_responsable,nombre, ap_paterno,ap_materno,F.id_funcion,nombre_funcion,S.id_subsede,nombre_subsede,email,telefono,E.id_estatus,E.nombre_estatus
+        FROM responsable R
+        INNER JOIN funcion F on F.id_funcion=R.id_funcion
+        INNER JOIN subsede S on S.id_subsede=R.id_subsede
+        INNER JOIN estatus E on E.id_estatus=R.id_estatus
+        WHERE R.id_estatus = '2';
+    </select>
+
+
+      <select id="buscaResponsable" parameterType="Responsable" resultMap="resultMapResponsable">
+          SELECT nombre, ap_paterno,ap_materno,F.id_funcion,nombre_funcion,S.id_subsede,nombre_subsede,email,telefono,E.id_estatus,nombre_estatus
+          FROM responsable R
+          INNER JOIN funcion F on F.id_funcion=R.id_funcion
+          INNER JOIN estatus E on E.id_Estatus=R.id_estatus
+          WHERE responsable=#{nombreResponsable}
+      </select>
+
+      <resultMap type="Responsable" id="resultMapResponsable">
+          <id property="idResponsable" column="id_responsable"/>
+          <result property="nombreResponsable" column="nombre"/>
+          <result property="apPaterno" column="ap_paterno"/>
+          <result property="apMaterno" column="ap_materno"/>
+          <result property="email" column="email"/>
+          <result property="telefono" column="telefono"/>
+
+          <association property="estatus" javaType="Estatus">
+              <id property="idEstatus" column="id_estatus"/>
+              <result property="nombreEstatus" column="nombre_estatus"/>
+          </association>
+
+          <association property="funcion" javaType="Funcion">
+              <id property="idFuncion" column="id_funcion"/>
+              <result property="funcion" column="nombre_funcion"/>
+          </association>
+
+          <association property="subsede" javaType="Subsede">
+              <id property="idSubsede" column="id_subsede"/>
+              <result property="nombreSubsede" column="nombre_subsede"/>
+          </association>
+      </resultMap>
+
+      <select id="obtenerTodosResponsables" resultMap="resultMapResponsable">
+          SELECT R.id_responsable, nombre, ap_paterno,ap_materno,F.id_funcion,nombre_funcion,S.id_subsede,nombre_subsede,email,telefono,E.id_estatus,E.nombre_estatus
+          FROM responsable R
+          INNER JOIN funcion F on F.id_funcion=R.id_funcion
+          INNER JOIN subsede S on S.id_subsede=R.id_subsede
+          INNER JOIN estatus E on E.id_estatus=R.id_estatus
+      </select>
+
+      <update id="editarResponsable" parameterType="Responsable">
+          UPDATE responsable
+          SET
+          nombre=#{nombreResponsable},
+          ap_paterno=#{apPaterno},
+          ap_materno=#{apMaterno},
+          email=#{email},
+          telefono=#{telefono},
+          id_estatus=#{estatus.idEstatus},
+          id_subsede=#{subsede.idSubsede},
+          id_funcion=#{funcion.idFuncion},
+          id_usuario=#{id_usuario}
+          WHERE
+          id_responsable=#{idResponsable}
+      </update>
+
+    <update id="reactivarResponsable" parameterType="Responsable">
+        UPDATE responsable
+        SET id_estatus='1'
+        WHERE id_responsable in (
+        <foreach collection="list" separator="," item="responsable">
+            #{responsable.idResponsable}
+        </foreach>
+        )
+    </update>
+
+    <update id="desactivarResponsable" parameterType="Responsable">
+        UPDATE responsable
+        SET id_estatus='2'
+        WHERE id_responsable in (
+        <foreach collection="list" separator="," item="responsable">
+            #{responsable.idResponsable}
+        </foreach>
+        )
+    </update>
+
+    <delete id="eliminarResponsables" >
+        DELETE FROM responsable
+        WHERE id_responsable in (
+        <foreach collection="list" separator="," item="responsable">
+            #{responsable.idResponsable}
+        </foreach>
+        )
+    </delete>
+
+    <delete id="eliminarResponsables2" >
+        DELETE FROM responsable
+        WHERE id_responsable in (
+        <foreach collection="list" separator="," item="responsable">
+            #{responsable.idResponsable}
+        </foreach>
+        ) and id_responsable not in (
+        SELECT id_responsable FROM funcion
+        ) and id_responsable not in (
+        SELECT id_responsable FROM subsede
+        )
+    </delete>
+
+
+    </mapper>

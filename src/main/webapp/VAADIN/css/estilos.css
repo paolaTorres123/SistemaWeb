@@ -1,0 +1,23 @@
+.main {
+    position: relative;
+}
+
+.div-main{
+    height: 100%;
+    width: 100% !important;
+    overflow: auto;
+    position: fixed;
+
+}
+
+.botones-menu{
+    background: #0f2c56;
+    color: #fff;
+    font-size: 14px;
+    font: 300 16px/1.55 "Open Sans", sans-serif;
+}
+
+.logo{
+    text-align: right;
+    margin-top: 24px;
+}

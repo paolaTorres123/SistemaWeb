@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="mappers">
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <insert id="agregaCuarto" parameterType="Cuarto">
+        INSERT INTO cuarto
+        (num_cuarto,capacidad_cuarto,id_casa)
+        VALUES
+        (#{num_cuarto}, #{capacidad_cuarto},#{casa.idCasa});
+    </insert>
+    <update id="editarCuarto" parameterType="Cuarto">
+        UPDATE cuarto
+        SET num_cuarto=#{num_cuarto},
+        capacidad_cuarto=#{capacidad_cuarto},
+        id_casa=#{casa.idCasa}
+        WHERE
+        id_cuarto=#{id_cuarto};
+    </update>
+    <delete id="eliminarCuarto" >
+        DELETE FROM cuarto
+        WHERE id_cuarto in (
+        <foreach collection="list" separator="," item="cuarto">
+            #{cuarto.id_cuarto}
+        </foreach>
+        )
+    </delete>
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <select id="obtenerTodasCuarto" resultMap="resultMapCuarto" >
+        SELECT id_cuarto, num_cuarto,capacidad_cuarto,C.id_casa,CA.nombre_casa,E.id_estatus,nombre_estatus
+        FROM cuarto C
+        INNER JOIN casa CA  on CA.id_casa=C.id_casa
+        INNER JOIN estatus E on E.id_estatus=C.estatus;
+    </select>
+
+    <select id="obtenerCuartosActivos" resultMap="resultMapCuarto" >
+        SELECT id_cuarto, num_cuarto,capacidad_cuarto,C.id_casa,CA.nombre_casa,E.id_estatus,nombre_estatus
+        FROM cuarto C
+        INNER JOIN casa CA  on CA.id_casa=C.id_casa
+        INNER JOIN estatus E on E.id_estatus=C.estatus
+        WHERE C.estatus='1';
+    </select>
+    <select id="obtenerCuartosInactivos" resultMap="resultMapCuarto" >
+        SELECT id_cuarto, num_cuarto,capacidad_cuarto,C.id_casa,CA.nombre_casa,E.id_estatus,nombre_estatus
+        FROM cuarto C
+        INNER JOIN casa CA  on CA.id_casa=C.id_casa
+        INNER JOIN estatus E on E.id_estatus=C.estatus
+        WHERE C.estatus='2';
+    </select>
+
+    <resultMap type="Cuarto" id="resultMapCuarto">
+        <id property="id_cuarto" column="id_cuarto"/>
+        <result property="num_cuarto" column="num_cuarto"/>
+        <result property="capacidad_cuarto" column="capacidad_cuarto"/>
+
+        <association property="casa" javaType="Casa">
+            <id property="idCasa" column="id_casa"/>
+            <id property="nombreCasa" column="nombre_casa"/>
+        </association>
+
+        <association property="estatus" javaType="Estatus">
+            <id property="idEstatus" column="id_estatus"/>
+            <result property="nombreEstatus" column="nombre_estatus"/>
+        </association>
+
+    </resultMap>
+    <update id="reactivarCuartos" parameterType="Cuarto">
+        UPDATE cuarto
+        SET estatus='1'
+        WHERE id_cuarto in (
+        <foreach collection="list" separator="," item="cuarto">
+            #{cuarto.id_cuarto}
+        </foreach>
+        )
+    </update>
+
+    <update id="desactivarCuartos" parameterType="Cuarto">
+        UPDATE cuarto
+        SET estatus='2'
+        WHERE id_cuarto in (
+        <foreach collection="list" separator="," item="cuarto">
+            #{cuarto.id_cuarto}
+        </foreach>
+        )
+    </update>
+
+
+
+
+</mapper>

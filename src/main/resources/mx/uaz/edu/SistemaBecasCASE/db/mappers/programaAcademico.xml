@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <resultMap type="ProgramaAcademico" id="resultMapProgramaAcademico">
+        <id property="id_programa_academico" column="id_programa_academico"/>
+        <result property="nombre" column="nombre"/>
+		<result property="num_exterior" column="num_exterior"/>
+		<result property="codigo_postal" column="codigo_postal"/>
+		<result property="calle" column="calle"/>
+		<result property="id_municipio" column="id_municipio"/>
+		<result property="colonia" column="colonia"/>
+		<result property="estatus" column="estatus"/>
+		<result property="id_unidad_academica" column="id_unidad_academica"/>
+    </resultMap>
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <select id="obtenerTodosProgramaAcademico" resultMap="resultMapProgramaAcademico" >
+		SELECT *
+		FROM  sistema_becas_case.programa_academico
+		WHERE esatus not like 'N'
+	</select>
+
+    <select id="obtenerProgramaAcademicoNombre" resultMap="resultMapProgramaAcademico" parameterType="ProgramaAcademico">
+		SELECT *
+		FROM  sistema_becas_case.programa_academico
+		WHERE nombre = #{nombre}
+	</select>
+
+	<select id="obtenerProgramaAcademicoId" resultMap="resultMapProgramaAcademico" parameterType="ProgramaAcademico">
+		SELECT *
+		FROM  sistema_becas_case.programa_academico
+		WHERE id_programa_academico = #{id_programa_academico}
+	</select>
+	
+
+	<update id="editarProgramaAcademico" parameterType="ProgramaAcademico">
+		UPDATE sistema_becas_case.programa_academico
+		SET nombre=#{nombre},num_exterior=#{num_exterior},codigo_postal=#{codigo_postal},
+			calle=#{calle},id_municipio=#{id_municipio},colonia=#{colonia},estatus=#{estatus},
+			id_unidad_academica=#{id_unidad_academica}
+		WHERE
+			id_programa_academico=#{id_programa_academico};
+	</update>
+
+    <insert id="agregaProgramaAcademico" parameterType="ProgramaAcademico">
+		INSERT INTO sistema_becas_case.programa_academico
+			(nombre,
+			num_exterior,
+			codigo_postal,
+			calle,
+			id_municipio,
+			colonia,
+			estatus,
+			id_unidad_academica)
+		VALUES
+			(#{nombre},
+			#{num_exterior},
+			#{codigo_postal},
+			#{calle},
+			#{id_municipio},
+			#{colonia},
+			#{estatus},
+			#{id_unidad_academica});
+	</insert>
+
+	<update id="cambiaEstatusProgramaAademico" parameterType="ProgramaAcademico">
+		UPDATE sistema_becas_case.programa_academico
+		SET estatus=#{estatus}
+		WHERE
+			id_programa_academico=#{id_programa_academico};
+	</update>
+
+
+	<select id="obtenerTodosProgramaAcademicoExpirado" resultMap="resultMapProgramaAcademico" >
+		SELECT *
+		FROM  sistema_becas_case.programa_academico
+		WHERE esatus not like 'A'
+	</select>
+
+	<select id="buscaProgramaAlumno" resultMap="resultMapProgramaAcademico" parameterType="Alumno">
+		SELECT p.*
+		FROM  programa_academico p
+		INNER JOIN alumno_programa_academico ap on p.id_programa_academico=ap.id_programa_academico
+		WHERE ap.id_alumno=#{id_alumno}
+	</select>
+
+</mapper>

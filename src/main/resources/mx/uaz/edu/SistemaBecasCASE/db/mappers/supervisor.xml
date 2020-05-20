@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+	<select id="obtenerTodosSupervisores" resultMap="resultMapSupervisor" >
+		SELECT id_supervisor, nombre_supervisor, ap_paterno, ap_materno, telefono_celular, email_supervisor, E.id_estatus, nombre_estatus
+		FROM supervisor S
+		INNER JOIN estatus E on E.id_estatus = S.id_estatus;
+	</select>
+
+	<select id="obtenerSupervisoresActivos" resultMap="resultMapSupervisor" >
+		SELECT id_supervisor, nombre_supervisor, ap_paterno, ap_materno, telefono_celular, email_supervisor, E.id_estatus, nombre_estatus
+		FROM supervisor S
+		INNER JOIN estatus E on E.id_estatus=S.id_estatus
+		WHERE S.id_estatus = '1';
+	</select>
+
+	<select id="obtenerSupervisoresInactivos" resultMap="resultMapSupervisor" >
+		SELECT id_supervisor, nombre_supervisor, ap_paterno, ap_materno, telefono_celular, email_supervisor, E.id_estatus, nombre_estatus
+		FROM supervisor S
+		INNER JOIN estatus E on E.id_estatus=S.id_estatus
+		WHERE S.id_estatus = '2';
+	</select>
+
+	<insert id="agregaSupervisor" parameterType="Supervisor">
+		INSERT INTO supervisor
+			(nombre_supervisor, ap_paterno, ap_materno, telefono_celular, email_supervisor, id_usuario)
+		VALUES
+			(#{nombreSupervisor}, #{apPaterno}, #{apMaterno}, #{telefonoCelular}, #{emailSupervisor}, #{id_usuario});
+	</insert>
+
+	<resultMap type="Supervisor" id="resultMapSupervisor">
+		<id property="idSupervisor" column="id_supervisor"/>
+		<result property="nombreSupervisor" column="nombre_supervisor"/>
+		<result property="apPaterno" column="ap_paterno"/>
+		<result property="apMaterno" column="ap_materno"/>
+		<result property="telefonoCelular" column="telefono_celular"/>
+		<result property="emailSupervisor" column="email_supervisor"/>
+		<association property="estatus" javaType="Estatus">
+			<id property="idEstatus" column="id_estatus"/>
+			<result property="nombreEstatus" column="nombre_estatus"/>
+		</association>
+	</resultMap>
+
+	<update id="editaSupervisor" parameterType="Supervisor">
+		UPDATE supervisor
+		SET nombre_supervisor=#{nombreSupervisor}, ap_paterno=#{apPaterno}, ap_materno=#{apMaterno}, telefono_celular=#{telefonoCelular},
+			email_supervisor=#{emailSupervisor}
+		WHERE
+			id_supervisor=#{idSupervisor};
+	</update>
+
+	<delete id="eliminarSupervisores" >
+		DELETE FROM supervisor
+		WHERE id_supervisor IN (
+		<foreach collection="list" separator="," item="supervisor">
+			#{supervisor.idSupervisor}
+		</foreach>
+		) AND id_supervisor NOT IN
+		(SELECT id_supervisor FROM supervisores_casas)
+		  AND id_supervisor NOT IN
+		(SELECT id_supervisor FROM casa)
+	</delete>
+
+	<update id="reactivarSupervisor" parameterType="Supervisor">
+		UPDATE supervisor
+		SET id_estatus='1'
+		WHERE id_supervisor in (
+		<foreach collection="list" separator="," item="supervisor">
+			#{supervisor.idSupervisor}
+		</foreach>
+		)
+	</update>
+
+	<update id="desactivarSupervisor" parameterType="Supervisor">
+		UPDATE supervisor
+		SET id_estatus='2'
+		WHERE id_supervisor in (
+		<foreach collection="list" separator="," item="supervisor">
+			#{supervisor.idSupervisor}
+		</foreach>
+		)
+	</update>
+
+
+</mapper>
+	
+ 

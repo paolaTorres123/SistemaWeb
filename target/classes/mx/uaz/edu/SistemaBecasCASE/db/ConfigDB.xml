@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+    
+  <configuration>
+	<typeAliases>
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Comedor" alias="Comedor" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Municipio" alias="Municipio" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Alumno" alias="Alumno" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.EstatusEconomico" alias="EstatusEconomico" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.ProgramaAcademico" alias="ProgramaAcademico" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.TipoAlumno" alias="TipoAlumno" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.TipoUsuario" alias="TipoUsuario" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.UnidadAcademica" alias="UnidadAcademica" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Usuario" alias="Usuario" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Casa" alias="Casa" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Estatus" alias="Estatus" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Responsable" alias="Responsable" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Subsede" alias="Subsede" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Funcion" alias="Funcion" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Supervisor" alias="Supervisor" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Cuarto" alias="Cuarto" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Beca" alias="Beca" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.TipoBeca" alias="TipoBeca" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.TipoSolicitud" alias="TipoSolicitud" />
+		<typeAlias type="mx.uaz.edu.SistemaBecasCASE.modelos.Administrador" alias="Administrador" />
+	</typeAliases>
+
+	
+	<environments default="mysql">
+		<environment id="mysql">
+			<transactionManager type="JDBC" />
+			<!-- -->
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="com.mysql.cj.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://35.192.175.107:3306/sistema_becas_case?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true" />
+				<property name="username" value="rootSBC" />
+				<property name="password" value="ojosmatamoros" />
+			</dataSource>
+		</environment>
+		
+	</environments>
+	
+	<mappers>
+		<!-- Permite mapear entre el modelo y la base de datos. -->
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/administrador.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/municipio.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/comedor.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/estatusEconomico.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/tipoAlumno.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/unidadAcademica.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/tipoUsuario.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/programaAcademico.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/usuario.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/alumno.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/casa.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/estatus.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/funcion.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/responsable.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/subsede.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/supervisor.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/cuarto.xml" />
+		<mapper resource="mx/uaz/edu/SistemaBecasCASE/db/mappers/beca.xml" />
+	</mappers>
+</configuration>

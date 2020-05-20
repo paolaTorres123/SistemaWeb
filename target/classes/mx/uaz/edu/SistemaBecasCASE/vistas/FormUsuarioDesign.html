@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;GENERATE_GETTERS&quot;:false,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta name="vaadin-version" content="8.1.5">
+ </head>
+ <body>
+  <vaadin-css-layout style-name="form-template" responsive size-full>
+   <vaadin-label style-name="title" width-full plain-text>
+     Formulario Usuario 
+   </vaadin-label>
+   <vaadin-css-layout caption="Información del Usuario" style-name="form-section">
+    <vaadin-css-layout style-name="input-group">
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Usuario" width="352px" _id="nombreUsuario"></vaadin-text-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-password-field caption="Contraseña" width="275px" _id="contrasena"></vaadin-password-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-password-field caption="Confirmación de Contraseña" width="273px" _id="contrasenaConf"></vaadin-password-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group">
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-combo-box caption="Tipo de Usuario" text-input-allowed="false" width="352px" data-item-type="mx.uaz.edu.SistemaBecasCASE.modelos.TipoUsuario" _id="cbTipoUsuario"></vaadin-combo-box>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Información de contacto" style-name="form-section caption-left">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="E-mail address" width="300px" _id="email"></vaadin-text-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full></vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout style-name="form-section" width-full>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e801" style-name="primary" plain-text _id="btnRegistrar">
+         Registrar 
+       </vaadin-button>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e7ad" style-name="danger" plain-text _id="btnCancelar">
+         Cancelar 
+       </vaadin-button>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+  </vaadin-css-layout>
+ </body>
+</html>

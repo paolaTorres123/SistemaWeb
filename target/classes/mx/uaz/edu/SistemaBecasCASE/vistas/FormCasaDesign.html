@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;GENERATE_GETTERS&quot;:false,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta name="vaadin-version" content="8.1.5">
+ </head>
+ <body>
+  <vaadin-css-layout style-name="form-template" responsive size-full>
+   <vaadin-css-layout caption="Casa" style-name="form-section" width-full>
+    <vaadin-css-layout style-name="input-group" width="270px" height="86px">
+     <vaadin-css-layout style-name="input-wrapper" width="257px" height="86px">
+      <vaadin-text-field caption="Nombre de la casa" width="238px" _id="tfnombreCasa"></vaadin-text-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper" width="292px" height="86px">
+     <vaadin-text-field caption="Número de cuartos" width="248px" _id="tfnumeroCuatosCasa"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper" width="270px" height="86px">
+     <vaadin-text-field caption="Capacidad total" width="248px" _id="tfcapacidadTotalCasa"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper" width="270px" height="86px">
+     <vaadin-combo-box caption="Nombre supervisor" text-input-allowed="false" data-item-type="mx.uaz.edu.SistemaBecasCASE.modelos.Supervisor" _id="cboNombreSupervisor"></vaadin-combo-box>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Dirección" style-name="form-section caption-left" width-full>
+    <vaadin-css-layout style-name="input-wrapper" width="424px" height="110px">
+     <vaadin-text-field caption="Calle" width="375px" _id="tfcalleCasa"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper" width="298px" height="115px">
+     <vaadin-text-field caption="Número Exterior" width="275px" _id="tfnumExteriorcasa"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper" width="424px" height="115px">
+     <vaadin-text-field caption="Colonia" width="375px" _id="tfcolniaCasa"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper" width="295px" height="115px">
+     <vaadin-text-field caption="Código Postal" width="276px" _id="tfCódigoPostalCasa"></vaadin-text-field>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout style-name="form-section" width-full>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e801" style-name="primary" plain-text _id="btnAgregarCasa">
+         Agregar 
+       </vaadin-button>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e7ad" style-name="danger" plain-text _id="btnCancelarCasa">
+         Cancelar 
+       </vaadin-button>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+  </vaadin-css-layout>
+ </body>
+</html>

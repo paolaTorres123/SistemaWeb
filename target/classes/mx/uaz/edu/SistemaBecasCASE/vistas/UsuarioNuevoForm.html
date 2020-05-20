@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;GENERATE_GETTERS&quot;:false,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta name="vaadin-version" content="8.1.5">
+ </head>
+ <body>
+  <vaadin-css-layout style-name="form-template" responsive size-full>
+   <vaadin-label style-name="title" width-full plain-text>
+     Nuevo Usuario 
+   </vaadin-label>
+   <vaadin-css-layout caption="Información Personal" style-name="form-section">
+    <vaadin-css-layout style-name="input-group">
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Nombre(s)" _id="tfNombre"></vaadin-text-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Apellido Paterno" _id="tfApPaterno"></vaadin-text-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Apellido Materno" placeholder="" _id="tfApMaterno"></vaadin-text-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-date-field caption="Fecha de Nacimiento" _id="dfFechNac"></vaadin-date-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout caption="Información de Contacto" style-name="input-group">
+     <vaadin-css-layout style-name="border">
+      <vaadin-css-layout style-name="input-wrapper">
+       <vaadin-text-field caption="E-mail" _id="tfEmail"></vaadin-text-field>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper" width="203px" height="81px">
+       <vaadin-text-field caption="Teléfono" _id="tfTelefono"></vaadin-text-field>
+      </vaadin-css-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Información de Recidencia" style-name="form-section caption-left">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper" responsive>
+      <vaadin-css-layout style-name="input-wrapper">
+       <vaadin-combo-box caption="Municipio" data-item-type="mx.uaz.edu.SistemaBecasCASE.modelos.Municipio" _id="cbMunicipio"></vaadin-combo-box>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper">
+       <vaadin-text-field caption="Colonia" _id="tfColonia"></vaadin-text-field>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper">
+       <vaadin-text-field caption="Calle" _id="tfCalle"></vaadin-text-field>
+      </vaadin-css-layout>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper" responsive>
+      <vaadin-css-layout style-name="input-wrapper">
+       <vaadin-text-field caption="Número exterior" _id="tfNumeroExt"></vaadin-text-field>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="input-wrapper">
+       <vaadin-text-field caption="Código Postal" _id="tfCodigoPostal"></vaadin-text-field>
+      </vaadin-css-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Restricciones de la cuenta" style-name="form-section caption-left">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper" responsive>
+      <vaadin-css-layout style-name="input-wrapper">
+       <vaadin-combo-box caption="Tipo de Usuario" data-item-type="mx.uaz.edu.SistemaBecasCASE.modelos.TipoUsuario" _id="cbTipoUsuario"></vaadin-combo-box>
+      </vaadin-css-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Contraseña de la Cuenta" style-name="form-section caption-left">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper" responsive>
+      <vaadin-password-field caption="Contraseña" _id="pfContra"></vaadin-password-field>
+     </vaadin-css-layout>
+     <vaadin-css-layout style-name="input-wrapper" responsive>
+      <vaadin-password-field caption="Confirma la Contraseña" _id="psConfirfmaContra"></vaadin-password-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout style-name="form-section" width-full height="103px">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e801" style-name="primary" plain-text _id="btRegistra">
+         Registrar 
+       </vaadin-button>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e7ad" style-name="danger" plain-text _id="btCancelar">
+         Cancelar 
+       </vaadin-button>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+  </vaadin-css-layout>
+ </body>
+</html>

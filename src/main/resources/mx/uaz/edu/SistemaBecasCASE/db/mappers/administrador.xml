@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <resultMap type="Administrador" id="resultMapAdministrador">
+        <id property="id_admin" column="id_admin"/>
+        <id property="id_usuario" column="id_usuario"/>
+        <result property="nombre" column="nombre"/>
+        <result property="ap_paterno" column="ap_paterno"/>
+        <result property="ap_materno" column="ap_materno"/>
+        <result property="email" column="email"/>
+        <result property="telefono" column="telefono"/>
+        <result property="calle" column="calle"/>
+        <result property="num_exterior" column="num_exterior"/>
+        <result property="colonia" column="colonia"/>
+        <result property="codigo_postal" column="codigo_postal"/>
+        <result property="fecha_nac" column="fecha_nac"/>
+        <association property="municipio" javaType="Municipio">
+            <id property="idMunicipio" column="id_municipio"/>
+            <result property="nombreMunicipio" column="nombre_municipio"/>
+        </association>
+        <association property="estatus" javaType="Estatus">
+            <id property="idEstatus" column="id_estatus"/>
+            <result property="estatus" column="estatus"/>
+        </association>
+    </resultMap>
+
+    <insert id="agregaAdministrador"  parameterType="Administrador">
+        INSERT INTO administrador
+        (id_usuario, nombre,ap_paterno,ap_materno,email,telefono,
+        estatus,calle,num_exterior,colonia,codigo_postal,fecha_nac,
+        id_municipio)
+        VALUES
+        (#{id_usuario}, #{nombre},#{ap_paterno},#{ap_materno},#{email},
+        #{telefono},#{estatus.idEstatus},#{calle},#{num_exterior},
+        #{colonia},#{codigo_postal},#{fecha_nac},#{municipio.idMunicipio});
+        <selectKey keyProperty="id_admin" resultType="int" order="AFTER">
+            SELECT @@IDENTITY AS id_admin
+        </selectKey>
+
+    </insert>
+
+    <update id="editaAdministrador" parameterType="Administrador">
+		UPDATE administrador
+		SET
+		    id_usuario=#{id_usuario},
+			nombre=#{nombre},
+			ap_paterno=#{ap_paterno},
+			ap_materno=#{ap_materno},
+			email=#{email},
+			telefono=#{telefono},
+			estatus=#{estatus.idEstatus},
+			calle=#{calle},
+			num_exterior=#{num_exterior},
+			colonia=#{colonia},
+			codigo_postal=#{codigo_postal},
+			id_municipio=#{municipio.idMunicipio},
+			fecha_nac=#{fecha_nac}
+		WHERE
+			id_admin=#{id_admin}
+	</update>
+
+    <update id="cambiaEstatusAdministrador" parameterType="Administrador">
+			UPDATE administrador
+			SET estatus=#{estatus.idEstatus}
+			WHERE id_admin=#{id_admin}
+	</update>
+
+    <select id="buscaAdministrador" resultMap="resultMapAdministrador" parameterType="Administrador">
+		SELECT *
+		FROM  administrador
+		WHERE id_usuario = #{id_usuario}
+	</select>
+
+    <select id="obtenerTodosAdministradoresActivos" resultMap="resultMapAdministrador" >
+		SELECT administrador.*,municipio.*,estatus.*
+		FROM  sistema_becas_case.administrador,sistema_becas_case.municipio,
+			sistema_becas_case.estatus
+		WHERE administrador.id_municipio = municipio.id_municipio
+        AND administrador.estatus = estatus.id_estatus
+        AND administrador.estatus like 1;
+	</select>
+
+    <select id="obtenerTodosAdministradoresExpirados" resultMap="resultMapAdministrador" >
+		SELECT administrador.*,municipio.*,estatus.*
+		FROM  sistema_becas_case.administrador,sistema_becas_case.municipio,
+			sistema_becas_case.estatus
+		WHERE administrador.id_municipio = municipio.id_municipio
+        AND administrador.estatus = estatus.id_estatus
+        AND administrador.estatus like 2;
+	</select>
+
+    <select id="obtenerTodosAdministradoresAcvInAcv" resultMap="resultMapAdministrador" >
+		SELECT administrador.*,municipio.*,estatus.*
+		FROM  sistema_becas_case.administrador,sistema_becas_case.municipio,
+			sistema_becas_case.estatus
+		WHERE administrador.id_municipio = municipio.id_municipio
+        AND administrador.estatus = estatus.id_estatus;
+	</select>
+
+</mapper>

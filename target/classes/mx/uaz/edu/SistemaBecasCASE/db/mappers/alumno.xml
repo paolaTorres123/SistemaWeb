@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <resultMap type="Alumno" id="resultMapAlumno">
+        <id property="id_alumno" column="id_alumno"/>
+        <result property="nombre" column="nombre"/>
+        <result property="ap_paterno" column="ap_paterno"/>
+        <result property="ap_materno" column="ap_materno"/>
+        <result property="email" column="email"/>
+        <result property="telefono" column="telefono"/>
+        <result property="promedio_general" column="promedio_general"/>
+        <result property="comentario_adicional" column="comentario_adicional"/>
+        <result property="matricula" column="matricula"/>
+        <result property="curp" column="CURP"/>
+        <result property="num_exterior" column="num_exterior"/>
+        <result property="codigo_postal" column="codigo_postal"/>
+        <result property="calle" column="calle"/>
+        <result property="colonia" column="colonia"/>
+		<result property="fecha_nac" column="fecha_nac"/>
+		<result property="nss" column="NSS"/>
+		<result property="promedio_anterior" column="promedio_anterior"/>
+		<result property="semestre" column="semestre"/>
+		<association property="municipio" javaType="Municipio">
+			<id property="idMunicipio" column="id_municipio"/>
+			<result property="nombreMunicipio" column="nombre_municipio"/>
+		</association>
+		<association property="tipo_alumno" javaType="TipoAlumno">
+			<id property="id_tipo_alumno" column="id_tipo_alumno"/>
+			<result property="tipo" column="tipo"/>
+		</association>
+		<association property="estatus" javaType="Estatus">
+			<id property="idEstatus" column="id_estatus"/>
+			<result property="estatus" column="estatus"/>
+		</association>
+		<association property="estatus_economico" javaType="EstatusEconomico">
+			<id property="id_estatus_economico" column="id_estatus_economico"/>
+			<result property="tipo" column="tipo"/>
+		</association>
+    </resultMap>
+
+    <insert id="agregaAlumno"  parameterType="Alumno">
+        INSERT INTO alumno
+        (nombre,ap_paterno,ap_materno,email,telefono,
+        estatus,calle,num_exterior,colonia,codigo_postal,
+        id_municipio,id_tipo_alumno,comentario_adicional,
+        matricula,curp,id_estatus_economico,fecha_nac, promedio_general, NSS, promedio_anterior, semestre)
+        VALUES
+        (#{nombre},#{ap_paterno},#{ap_materno},#{email},
+        #{telefono},#{estatus.idEstatus},#{calle},#{num_exterior},
+        #{colonia},#{codigo_postal},#{municipio.idMunicipio},#{tipo_alumno.id_tipo_alumno},
+        #{comentario_adicional},#{matricula},#{curp},#{estatus_economico.id_estatus_economico},#{fecha_nac},
+		#{promedio_general}, #{nss}, #{promedio_anterior}, #{semestre});
+        <selectKey keyProperty="id_alumno" resultType="int" order="AFTER">
+            SELECT @@IDENTITY AS id_usuario
+        </selectKey>
+
+    </insert>
+
+    <update id="editaAlumno" parameterType="Alumno">
+		UPDATE alumno
+		SET
+			nombre=#{nombre},
+			ap_paterno= #{ap_paterno},
+			ap_materno= #{ap_materno},
+			email= #{email},
+			telefono= #{telefono},
+			estatus= #{estatus.idEstatus},
+			calle= #{calle},
+			num_exterior= #{num_exterior},
+			colonia= #{colonia},
+			codigo_postal= #{codigo_postal},
+			id_municipio= #{municipio.idMunicipio},
+			id_tipo_alumno=#{tipo_alumno.id_tipo_alumno},
+			comentario_adicional= #{comentario_adicional},
+			matricula= #{matricula},
+			curp= #{curp},
+			id_estatus_economico=#{estatus_economico.id_estatus_economico},
+			fecha_nac=#{fecha_nac},
+			promedio_general=#{promedio_general},
+			promedio_anterior=#{promedio_anterior},
+			NSS=#{nss},
+			semestre=#{semestre}
+		WHERE
+			id_alumno=#{id_alumno}
+	</update>
+
+
+    <update id="actualizaCorreoAlumno" parameterType="Alumno">
+		UPDATE alumno
+		SET email=#{email}
+		WHERE
+			id_alumno=#{id_alumno};
+	</update>
+
+
+    <update id="cambiaEstatusAlumnos" parameterType="Alumno">
+		UPDATE alumno
+		SET estatus=#{estatus.idEstatus}
+		WHERE
+			id_alumno=#{id_alumno};
+	</update>
+
+	<select id="buscaAlumnoSolicitud" resultMap="resultMapAlumno" parameterType="Alumno">
+		SELECT *
+		FROM  alumno
+		WHERE matricula=#{matricula} OR curp=#{curp}
+	</select>
+
+	<select id="buscaAlumno" resultMap="resultMapAlumno" parameterType="Alumno">
+		SELECT a.*,m.*,e.*,ee.*,ta.*
+		FROM  alumno a,municipio m,
+        estatus e, estatus_economico ee,tipo_alumno ta
+		WHERE a.id_estatus_economico = ee.id_estatus_economico
+        AND a.id_municipio = m.id_municipio
+        AND a.estatus = e.id_estatus
+        AND a.id_tipo_alumno = ta.id_tipo_alumno
+		AND a.id_alumno=#{id_alumno}
+	</select>
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <select id="obtenerTodosAlumnosActivos" resultMap="resultMapAlumno" >
+		SELECT a.*,m.*,e.*,ee.*,ta.*
+		FROM  alumno a,municipio m,
+        estatus e, estatus_economico ee,tipo_alumno ta
+		WHERE a.id_estatus_economico = ee.id_estatus_economico
+        AND a.id_municipio = m.id_municipio
+        AND a.estatus = e.id_estatus
+        AND a.id_tipo_alumno = ta.id_tipo_alumno
+        AND a.estatus like 1;
+	</select>
+
+    <select id="obtenerTodosAlumnosExpirados" resultMap="resultMapAlumno" >
+		SELECT a.*,m.*,e.*,ee.*,ta.*
+		FROM  alumno a,municipio m,
+        estatus e, estatus_economico ee,tipo_alumno ta
+		WHERE a.id_estatus_economico = ee.id_estatus_economico
+        AND a.id_municipio = m.id_municipio
+        AND a.estatus = e.id_estatus
+        AND a.id_tipo_alumno = ta.id_tipo_alumno
+        AND a.estatus like 2;
+	</select>
+
+	<select id="obtenerTodosAlumnos" resultMap="resultMapAlumno" >
+		SELECT a.*,m.*,e.*,ee.*,ta.*
+		FROM  alumno a,municipio m,
+        estatus e, estatus_economico ee,tipo_alumno ta
+		WHERE a.id_estatus_economico = ee.id_estatus_economico
+        AND a.id_municipio = m.id_municipio
+        AND a.estatus = e.id_estatus
+        AND a.id_tipo_alumno = ta.id_tipo_alumno;
+	</select>
+
+</mapper>

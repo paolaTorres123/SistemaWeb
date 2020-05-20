@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <select id="obtenerTodasSubsedes" resultMap="resultSubsede" >
+        select id_subsede, nombre_subsede
+        from subsede;
+    </select>
+
+    <resultMap type="subsede" id="resultSubsede">
+        <id property="idSubsede" column="id_subsede"/>
+        <result property="nombreSubsede" column="nombre_subsede"/>
+    </resultMap>
+
+
+    <insert id="agregaSubsede"  parameterType="Subsede">
+        INSERT INTO  subsede
+        (nombre_subsede)
+        VALUES
+        (#{subsede})
+        <selectKey keyProperty="idSubsede" resultType="int" order="AFTER" >
+            SELECT @@IDENTITY AS id_subsede
+        </selectKey>
+    </insert>
+
+    <update id="editarSubsede" parameterType="Subsede">
+        UPDATE subsede
+        SET
+        nombre_subsede=#{subsede}
+        WHERE
+        id_subsede=#{idSubsede}
+    </update>
+
+    <delete id="eliminarSubsede" >
+        DELETE FROM subsede
+        WHERE id_subsede in (
+        <foreach collection="list" separator="," item="subsede">
+            #{subsede.idSubsede}
+        </foreach>
+        )AND id_subsede NOT IN(
+        SELECT id_subsede  FROM responsable)
+    </delete>
+
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+	<select id="obtenerTodosComedores" resultMap="resultMapComedor" >
+		SELECT id_comedor, nombre_comedor, calle, num_exterior, colonia, codigo_postal, M.id_municipio, nombre_municipio, telefono, desayuno, comida, cena, E.id_estatus, nombre_estatus
+		FROM comedor C
+		INNER JOIN municipio M on C.id_municipio=M.id_municipio
+		INNER JOIN estatus E on E.id_estatus=C.id_estatus;
+	</select>
+
+	<select id="obtenerComedoresActivos" resultMap="resultMapComedor" >
+		SELECT id_comedor, nombre_comedor, calle, num_exterior, colonia, codigo_postal, M.id_municipio, nombre_municipio, telefono, desayuno, comida, cena, E.id_estatus, nombre_estatus
+		FROM comedor C
+		INNER JOIN municipio M on C.id_municipio=M.id_municipio
+		INNER JOIN estatus E on E.id_estatus=C.id_estatus
+		WHERE C.id_estatus = '1';
+	</select>
+
+	<select id="obtenerComedoresInactivos" resultMap="resultMapComedor" >
+		SELECT id_comedor, nombre_comedor, calle, num_exterior, colonia, codigo_postal, M.id_municipio, nombre_municipio, telefono, desayuno, comida, cena, E.id_estatus, nombre_estatus
+		FROM comedor C
+		INNER JOIN municipio M on C.id_municipio=M.id_municipio
+		INNER JOIN estatus E on E.id_estatus=C.id_estatus
+		WHERE C.id_estatus = '2';
+	</select>
+
+	<insert id="agregaComedor" parameterType="Comedor">
+		INSERT INTO comedor
+			(nombre_comedor, calle, num_exterior, colonia, codigo_postal, id_municipio, telefono, desayuno, comida, cena)
+		VALUES
+			(#{nombreComedor}, #{calle}, #{numExterior}, #{colonia} ,#{codigoPostal}, #{municipio.idMunicipio}, #{telefono}, #{desayuno}, #{comida}, #{cena});
+	</insert>
+
+	<resultMap type="Comedor" id="resultMapComedor">
+		<id property="idComedor" column="id_comedor"/>
+		<result property="nombreComedor" column="nombre_comedor"/>
+		<result property="calle" column="calle"/>
+		<result property="numExterior" column="num_exterior"/>
+		<result property="colonia" column="colonia"/>
+		<result property="codigoPostal" column="codigo_postal"/>
+		<result property="telefono" column="telefono"/>
+		<result property="desayuno" column="desayuno"/>
+		<result property="comida" column="comida"/>
+		<result property="cena" column="cena"/>
+
+		<association property="municipio" javaType="Municipio">
+			<id property="idMunicipio" column="id_municipio"/>
+			<result property="nombreMunicipio" column="nombre_municipio"/>
+		</association>
+		<association property="estatus" javaType="Estatus">
+			<id property="idEstatus" column="id_estatus"/>
+			<result property="nombreEstatus" column="nombre_estatus"/>
+		</association>
+
+	</resultMap>
+
+	<update id="editaComedor" parameterType="Comedor">
+		UPDATE comedor
+		SET nombre_comedor=#{nombreComedor}, calle=#{calle}, num_exterior=#{numExterior}, colonia=#{colonia}, codigo_postal=#{codigoPostal},
+		id_municipio=#{municipio.idMunicipio}, telefono=#{telefono}, desayuno=#{desayuno}, comida=#{comida}, cena=#{cena}
+		WHERE
+			id_comedor=#{idComedor};
+	</update>
+
+	<update id="reactivarComedor" parameterType="Comedor">
+		UPDATE comedor
+		SET id_estatus='1'
+		WHERE id_comedor in (
+		<foreach collection="list" separator="," item="comedor">
+			#{comedor.idComedor}
+		</foreach>
+		)
+	</update>
+
+	<update id="desactivarComedor" parameterType="Comedor">
+		UPDATE comedor
+		SET id_estatus='2'
+		WHERE id_comedor in (
+		<foreach collection="list" separator="," item="comedor">
+			#{comedor.idComedor}
+		</foreach>
+		)
+	</update>
+
+	<delete id="eliminarComedores" >
+		DELETE FROM comedor
+		WHERE id_comedor in (
+		<foreach collection="list" separator="," item="comedor">
+			#{comedor.idComedor}
+		</foreach>
+		)
+	</delete>
+
+	<delete id="eliminarComedores2" >
+		DELETE FROM comedor
+		WHERE id_comedor in (
+		<foreach collection="list" separator="," item="comedor">
+			#{comedor.idComedor}
+		</foreach>
+		) and id_comedor not in (
+			SELECT id_comedor FROM comedor
+		)
+	</delete>
+
+</mapper>

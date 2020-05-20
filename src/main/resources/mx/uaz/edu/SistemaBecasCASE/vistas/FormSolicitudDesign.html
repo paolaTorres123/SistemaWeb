@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;GENERATE_GETTERS&quot;:false,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta name="vaadin-version" content="8.1.5">
+ </head>
+ <body>
+  <vaadin-css-layout style-name="form-template" responsive size-full>
+   <vaadin-label style-name="title" width-full plain-text _id="lbTitulo">
+     Solicitud de Beca 
+   </vaadin-label>
+   <vaadin-css-layout caption="¿Quién solicita la Beca?" style-name="form-section" _id="formSolicita">
+    <vaadin-css-layout style-name="input-group">
+     <vaadin-vertical-layout size-auto>
+      <vaadin-radio-button-group data-item-type="java.lang.String" _id="rbTipoAlumno">
+       <option item="aspirante">Tramitar beca como aspirante</option>
+       <option item="alumno">Tramitar beca como alumno</option>
+      </vaadin-radio-button-group>
+      <vaadin-button plain-text _id="btnContinuarS1">
+        Continuar 
+      </vaadin-button>
+     </vaadin-vertical-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Tramitar beca como alumno" style-name="form-section caption-left" _id="formTramitar">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Matrícula" width="359px" _id="txMatricula"></vaadin-text-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper" height="56px">
+      <vaadin-password-field caption="Fecha de Nacimiento (DDMMAAAA)" width="191px" _id="pfContrasena"></vaadin-password-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper">
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-label plain-text>
+        La fecha debe contener 2 dígitos para el día, 2 dígitos para el mes y 4 dígitos para el año. 
+      </vaadin-label>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-wrapper">
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-label plain-text>
+        Ejemplo: 27071994 (esta fecha representa el 27 de julio de 1994). 
+      </vaadin-label>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Correo Electrónico" width="300px" _id="txEmail"></vaadin-text-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-button plain-text _id="btnContinuarS2">
+        Continuar 
+      </vaadin-button>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Llenar solicitud" style-name="form-section caption-left" _id="formLlenar">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout caption="Solicitante" _id="lbNombreSolicitante">
+       <vaadin-text-field width="367px" _id="txSolicitante"></vaadin-text-field>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-text-field caption="Actualmente Estudia" width="300px" _id="txCarrera"></vaadin-text-field>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-radio-button-group caption="Tipo de solicitud" data-item-type="java.lang.String" _id="rbTipoSolicitud">
+       <option item="nueva">Nueva</option>
+       <option item="renovacion">Renovación</option>
+      </vaadin-radio-button-group>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-check-box-group caption="Tipos de beca" data-item-type="java.lang.String" _id="chTipoBca">
+       <option item="Hospedaje">Hospedaje</option>
+       <option item="Alimentación">Alimentación</option>
+      </vaadin-check-box-group>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-button plain-text _id="btnContinuarS3">
+        Continuar 
+      </vaadin-button>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout caption="Registro completado" style-name="form-section caption-left" _id="formRegistro">
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout>
+       <vaadin-label plain-text _id="lbRegistro">
+         Tu registro se ha completado, GENERA TU REPORTE DE SOLICITUD y consulta la convocatoria en la página 
+       </vaadin-label>
+       <vaadin-link caption="http://case.uaz.edu.mx/" _id="linkRegistro"></vaadin-link>
+       <vaadin-label plain-text _id="lbRegistro2">
+         para más información. 
+       </vaadin-label>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout>
+       <vaadin-check-box _id="chAcepto"></vaadin-check-box>
+       <vaadin-label plain-text>
+         Manifiesto que he leído y acepto cumplir y respetar la normatividad de la UAZ, el reglamento de becas y reglamentos internos. 
+       </vaadin-label>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-button plain-text _id="btnContinuarS4">
+        Generar reporte 
+      </vaadin-button>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-css-layout style-name="form-section" width-full>
+    <vaadin-css-layout style-name="input-group" width-full>
+     <vaadin-css-layout style-name="input-wrapper">
+      <vaadin-horizontal-layout>
+       <vaadin-button style-name="primary" plain-text _id="btnRegresar">
+         Comenzar otra solicitud de beca 
+       </vaadin-button>
+      </vaadin-horizontal-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+  </vaadin-css-layout>
+ </body>
+</html>

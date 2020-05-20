@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <resultMap type="Usuario" id="resultMapUsuario">
+        <id property="id_usuario" column="id_usuario"/>
+        <result property="nombre_usuario" column="nombre_usuario"/>
+        <result property="email" column="email"/>
+        <result property="contrasena" column="contraseña"/>
+		<result property="cadena" column="cadena"/>
+		<result property="confirmado" column="confirmado"/>
+
+		<association property="tipo_usuario" javaType="TipoUsuario">
+			<id property="id_tipo_usuario" column="id_tipo_usuario"/>
+			<result property="tipo" column="tipo"/>
+		</association>
+
+    </resultMap>
+
+	<insert id="agregaUsuario"  parameterType="Usuario">
+		INSERT INTO usuario
+		(nombre_usuario,email,contraseña,
+		cadena,confirmado,tipo_usuario)
+		VALUES
+		(#{nombre_usuario},#{email},#{contrasena},
+		#{cadena},#{confirmado},#{tipo_usuario.id_tipo_usuario});
+		<selectKey keyProperty="id_usuario" resultType="int" order="AFTER">
+			SELECT @@IDENTITY AS id_usuario
+		</selectKey>
+
+	</insert>
+
+	<update id="editaUsuario" parameterType="Usuario">
+		UPDATE usuario
+		SET
+			nombre_usuario=#{nombre_usuario},
+			email=#{email},
+			tipo_usuario=#{tipo_usuario.id_tipo_usuario},
+			contraseña=#{contrasena}
+		WHERE
+			id_usuario=#{id_usuario}
+	</update>
+
+	<select id="buscaUsuario" resultMap="resultMapUsuario" parameterType="Usuario">
+		SELECT usuario.*,tipo_usuario.*
+		FROM  sistema_becas_case.usuario
+		INNER JOIN sistema_becas_case.tipo_usuario
+		ON usuario.tipo_usuario = tipo_usuario.id_tipo_usuario
+		WHERE nombre_usuario = #{nombre_usuario} AND contraseña=#{contrasena}
+	</select>
+
+	<select id="obtenerTodosUsuarios" resultMap="resultMapUsuario" >
+		SELECT usuario.*,tipo_usuario.*
+		FROM  sistema_becas_case.usuario,sistema_becas_case.tipo_usuario
+		WHERE usuario.tipo_usuario = tipo_usuario.id_tipo_usuario;
+	</select>
+
+	<update id="confirmaCuenta" parameterType="Usuario">
+		UPDATE usuario
+		SET
+			confirmado = 'C',
+			cadena = ''
+		WHERE
+			id_usuario=#{id_usuario}
+	</update>
+
+	<select id="buscaUsuarioConfirm" parameterType="Usuario" resultMap="resultMapUsuario">
+		SELECT usuario.*,tipo_usuario.*
+		FROM  sistema_becas_case.usuario
+		INNER JOIN sistema_becas_case.tipo_usuario
+		ON usuario.tipo_usuario = tipo_usuario.id_tipo_usuario
+		WHERE nombre_usuario=#{nombre_usuario} AND cadena=#{cadena}
+	</select>
+
+	<delete id="eliminarUsuarios" >
+		DELETE FROM usuario
+		WHERE id_usuario IN (
+		<foreach collection="list" separator="," item="usuario">
+			#{usuario.id_usuario}
+		</foreach>
+		)
+		<!--AND id_usuario NOT IN
+		(SELECT id_usuario FROM supervisor)
+		AND id_usuario NOT IN
+		(SELECT id_usuario FROM administrador)
+		AND id_usuario NOT IN
+		(SELECT id_usuario FROM responsable)-->
+	</delete>
+
+</mapper>

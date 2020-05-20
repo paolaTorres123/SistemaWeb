@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+    <select id="obtenerTodosTipoAlumno" resultMap="resultMapTipoAlumno" >
+		SELECT *
+		FROM  tipo_alumno
+	</select>
+
+    <select id="obtenerTipoAlumnoTipo" resultMap="resultMapTipoAlumno" parameterType="TipoAlumno">
+		SELECT *
+		FROM  tipo_alumno
+		WHERE tipo = #{tipo}
+	</select>
+
+	<select id="obtenerTipoAlumnoId" resultMap="resultMapTipoAlumno" parameterType="TipoAlumno">
+		SELECT *
+		FROM  tipo_alumno
+		WHERE id_tipo_alumno = #{id_tipo_alumno}
+	</select>
+
+
+    <insert id="agregaTipoAlumno" parameterType="TipoAlumno">
+		INSERT INTO tipo_alumno
+			(tipo)
+		VALUES
+			(#{tipo});
+	</insert>
+
+    <resultMap type="TipoAlumno" id="resultMapTipoAlumno">
+        <id property="id_tipo_alumno" column="id_tipo_alumno"/>
+        <result property="tipo" column="tipo"/>
+    </resultMap>
+
+    <update id="editaTipoAlumno" parameterType="TipoAlumno">
+		UPDATE tipo_alumno
+		SET tipo=#{tipo}
+		WHERE
+			id_tipo_alumno=#{id_tipo_alumno};
+	</update>
+
+</mapper>

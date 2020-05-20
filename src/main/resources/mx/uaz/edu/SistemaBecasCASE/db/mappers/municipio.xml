@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <!-- Es importante que el id no se repita ResultType es el tipo de resultado que regresa -->
+	<select id="obtenerTodosMunicipios" resultMap="resultMapMunicipio" >
+		SELECT id_municipio, nombre_municipio
+		FROM municipio
+	</select>
+
+
+	<resultMap type="Municipio" id="resultMapMunicipio">
+		<id property="idMunicipio" column="id_municipio"/>
+		<result property="nombreMunicipio" column="nombre_municipio"/>
+	</resultMap>
+
+	<select id="obtenMunicipioId" resultMap="resultMapMunicipio" parameterType="Municipio" >
+		SELECT id_municipio, nombre_municipio
+		FROM municipio
+		WHERE id_municipio =#{idMunicipio}
+	</select>
+
+	<select id="obtenMunicipioNombre" resultMap="resultMapMunicipio" parameterType="Municipio" >
+		SELECT id_municipio, nombre_municipio
+		FROM municipio
+		WHERE nombre_municipio =#{nombreMunicipio}
+	</select>
+
+
+
+</mapper>
+	
+ 
